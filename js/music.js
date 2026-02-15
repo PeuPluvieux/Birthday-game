@@ -22,18 +22,26 @@ const Music = {
     play(trackName) {
         this.init();
         this.stop();
-        if (this.ctx.state === 'suspended') this.ctx.resume();
 
         this.isPlaying = true;
         this.currentTrack = trackName;
 
-        switch(trackName) {
-            case 'title': this.playTitle(); break;
-            case 'opening': this.playOpening(); break;
-            case 'world1': this.playWorld1(); break;
-            case 'world2': this.playWorld2(); break;
-            case 'world3': this.playWorld3(); break;
-            case 'celebration': this.playCelebration(); break;
+        const startTrack = () => {
+            if (!this.isPlaying || this.currentTrack !== trackName) return;
+            switch(trackName) {
+                case 'title': this.playTitle(); break;
+                case 'opening': this.playOpening(); break;
+                case 'world1': this.playWorld1(); break;
+                case 'world2': this.playWorld2(); break;
+                case 'world3': this.playWorld3(); break;
+                case 'celebration': this.playCelebration(); break;
+            }
+        };
+
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume().then(() => startTrack());
+        } else {
+            startTrack();
         }
     },
 
@@ -442,10 +450,15 @@ const Music = {
     }
 };
 
-// Initialize audio on first user interaction
+// Initialize and unlock audio on user interactions
+// Some browsers require resume() to be called directly in a gesture handler
+function _unlockAudio() {
+    Music.init();
+    if (Music.ctx && Music.ctx.state === 'suspended') {
+        Music.ctx.resume();
+    }
+}
+
 ['click', 'touchstart', 'keydown'].forEach(event => {
-    document.addEventListener(event, function initAudio() {
-        Music.init();
-        document.removeEventListener(event, initAudio);
-    }, { once: true });
+    document.addEventListener(event, _unlockAudio, { capture: true });
 });

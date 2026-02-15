@@ -307,7 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     if (startBtn) {
         startBtn.addEventListener('click', () => {
-            if (typeof Music !== 'undefined') Music.playSFX('click');
+            // Unlock audio context immediately on user gesture
+            if (typeof Music !== 'undefined') {
+                Music.init();
+                if (Music.ctx && Music.ctx.state === 'suspended') {
+                    Music.ctx.resume();
+                }
+                Music.playSFX('click');
+            }
             GameState.transition('OPENING');
         });
     }
