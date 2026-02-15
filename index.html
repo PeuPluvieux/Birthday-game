@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Như's Birthday Adventure!</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/characters.css">
+    <link rel="stylesheet" href="css/world1.css">
+    <link rel="stylesheet" href="css/maze.css">
+    <link rel="stylesheet" href="css/world2.css">
+    <link rel="stylesheet" href="css/world3.css">
+    <link rel="stylesheet" href="css/celebration.css">
+
+    <!-- Favicon (pokeball emoji) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+</head>
+<body>
+    <div id="game-container">
+
+        <!-- Music toggle button -->
+        <button id="music-toggle" title="Toggle Music">🔊</button>
+
+        <!-- ========== START SCREEN ========== -->
+        <section id="screen-start" class="game-screen">
+            <div class="start-stars" id="start-stars"></div>
+
+            <div class="start-title">
+                ✨ Như's ✨<br>
+                Birthday<br>
+                Adventure!
+            </div>
+
+            <div class="start-subtitle">A Pokémon Birthday Quest</div>
+
+            <div class="start-pokeball">
+                <div class="pokeball-top"></div>
+                <div class="pokeball-center">
+                    <div class="pokeball-button"></div>
+                </div>
+                <div class="pokeball-bottom"></div>
+            </div>
+
+            <button id="start-btn">▶ PRESS START</button>
+        </section>
+
+        <!-- ========== OPENING SEQUENCE ========== -->
+        <section id="screen-opening" class="game-screen">
+            <div class="opening-bg bg-black"></div>
+            <div class="opening-characters"></div>
+
+            <div class="opening-name-reveal">
+                <div class="name-text"></div>
+            </div>
+
+            <div class="opening-world-map">
+                <div class="map-path">
+                    <div class="map-node">🌿</div>
+                    <div class="map-dots"></div>
+                    <div class="map-node">🌲</div>
+                    <div class="map-dots"></div>
+                    <div class="map-node">🐕</div>
+                </div>
+            </div>
+
+            <div class="opening-text"></div>
+            <div class="opening-indicator"></div>
+            <button class="opening-start-btn">▶ LET'S GO!</button>
+        </section>
+
+        <!-- ========== WORLD 1: INTRO ========== -->
+        <section id="screen-world1-intro" class="game-screen intro-screen">
+            <div class="intro-character" data-sprite="bulbasaur" data-scale="3"></div>
+            <p class="intro-text"></p>
+            <button class="intro-btn">🌿 Let's collect berries!</button>
+        </section>
+
+        <!-- ========== WORLD 1: GAME ========== -->
+        <section id="screen-world1-game" class="game-screen">
+            <div class="world1-hud">
+                <span class="hud-berries">🫐 0/10</span>
+                <span class="hud-timer">⏱️ 90s</span>
+            </div>
+            <div class="world1-canvas-wrap">
+                <canvas id="world1-canvas"></canvas>
+                <div class="dpad-container">
+                    <button class="dpad-btn dpad-up" id="dpad-up">▲</button>
+                    <button class="dpad-btn dpad-down" id="dpad-down">▼</button>
+                    <button class="dpad-btn dpad-left" id="dpad-left">◀</button>
+                    <button class="dpad-btn dpad-right" id="dpad-right">▶</button>
+                </div>
+
+                <div class="retry-overlay">
+                    <p class="retry-text"></p>
+                    <button class="retry-btn">🔄 Try Again!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORLD 1: COMPLETE ========== -->
+        <section id="screen-world1-complete" class="game-screen complete-screen"
+                 style="background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 35%, #4a8b3f 35%, #3d7a35 60%, #2d6b25 100%);">
+            <div class="complete-character" data-sprite="bulbasaur" data-scale="3"></div>
+            <p class="complete-text"></p>
+            <button class="complete-btn">🌲 Into the forest!</button>
+        </section>
+
+        <!-- ========== MAZE: WALKING TRANSITION AREA ========== -->
+        <!-- Single shared screen used for all three maze transitions.
+             GameState.MAZE1 / MAZE2 / MAZE3 all point here; Maze.start()
+             sets up the correct layout for each world. -->
+        <section id="screen-maze" class="game-screen">
+            <div class="maze-canvas-wrap">
+                <canvas id="maze-canvas"></canvas>
+                <div class="maze-dpad-container">
+                    <button class="maze-dpad-btn maze-dpad-up"    id="maze-dpad-up">▲</button>
+                    <button class="maze-dpad-btn maze-dpad-down"  id="maze-dpad-down">▼</button>
+                    <button class="maze-dpad-btn maze-dpad-left"  id="maze-dpad-left">◀</button>
+                    <button class="maze-dpad-btn maze-dpad-right" id="maze-dpad-right">▶</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORLD 2: INTRO ========== -->
+        <section id="screen-world2-intro" class="game-screen intro-screen">
+            <div class="intro-character" data-sprite="bulbasaur" data-scale="3"></div>
+            <p class="intro-text"></p>
+            <button class="intro-btn">🏃 Let's run!</button>
+        </section>
+
+        <!-- ========== WORLD 2: GAME ========== -->
+        <section id="screen-world2-game" class="game-screen">
+            <div class="world2-hud">
+                <span class="hud-obstacles">🏃 0/15</span>
+                <span class="hud-lives">❤️❤️❤️</span>
+            </div>
+            <div class="world2-canvas-wrap">
+                <canvas id="world2-canvas"></canvas>
+                <div class="jump-btn-container">
+                    <button class="jump-btn" id="jump-btn">JUMP!</button>
+                </div>
+
+                <div class="portal-overlay">
+                    <div class="portal-effect"></div>
+                </div>
+
+                <div class="world2-retry">
+                    <p class="retry-text"></p>
+                    <button class="retry-btn">🔄 Try Again!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORLD 2: COMPLETE ========== -->
+        <section id="screen-world2-complete" class="game-screen complete-screen"
+                 style="background: linear-gradient(180deg, #2c3e50 0%, #2c3e50 30%, #1a5c1a 30%, #145214 60%, #0d3b0d 100%);">
+            <div class="complete-character" data-sprite="bulbasaur" data-scale="3"></div>
+            <p class="complete-text"></p>
+            <button class="complete-btn">✨ Enter the portal!</button>
+        </section>
+
+        <!-- ========== WORLD 3: INTRO ========== -->
+        <section id="screen-world3-intro" class="game-screen intro-screen">
+            <div class="intro-character" data-sprite="pompompurin" data-scale="3"></div>
+            <p class="intro-text" style="color: #5d4037;"></p>
+            <button class="intro-btn" style="background: #fdcb6e; color: #5d4037; box-shadow: 0 4px 0 #d4a574;">🌟 Let's go!</button>
+        </section>
+
+        <!-- ========== WORLD 3: GAME ========== -->
+        <section id="screen-world3-game" class="game-screen">
+            <div class="quiz-progress">
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+            </div>
+
+            <div class="quiz-host"></div>
+
+            <div class="quiz-card">
+                <p class="quiz-question"></p>
+                <div class="quiz-options"></div>
+                <div class="quiz-funfact">
+                    <p></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORLD 3: COMPLETE ========== -->
+        <section id="screen-world3-complete" class="game-screen complete-screen"
+                 style="background: linear-gradient(180deg, #fff9c4 0%, #ffeaa7 50%, #fdcb6e 100%);">
+            <div class="complete-character" data-sprite="pompompurin" data-scale="3"></div>
+            <p class="complete-text" style="color: #5d4037;"></p>
+            <button class="complete-btn" style="background: #fdcb6e; color: #5d4037; box-shadow: 0 4px 0 #d4a574;">🎁 Show me!</button>
+        </section>
+
+        <!-- ========== CELEBRATION ========== -->
+        <section id="screen-celebration" class="game-screen">
+            <div class="celebration-stars"></div>
+            <div class="floating-hearts"></div>
+            <div class="confetti-container"></div>
+
+            <div class="celebration-characters">
+                <div class="celeb-char" data-char="nhu"></div>
+                <div class="celeb-char" data-char="bulbasaur"></div>
+                <div class="celeb-char" data-char="slowpoke"></div>
+                <div class="celeb-char" data-char="psyduck"></div>
+                <div class="celeb-char" data-char="pompompurin"></div>
+                <div class="celeb-char" data-char="patrick"></div>
+            </div>
+
+            <div class="celebration-cake">
+                <div class="candles-container"></div>
+                <div class="cake-sprite" data-sprite="cake" data-scale="5"></div>
+            </div>
+
+            <p class="blow-prompt" style="display:none;">Tap the candles<br>to blow them out! 🕯️</p>
+
+            <div class="happy-birthday-text"></div>
+
+            <div class="birthday-message"></div>
+
+            <div class="celebration-credits" style="opacity: 0; transition: opacity 2s;">
+                <p class="credits-text">Made with 💕 by Patrick<br>for Như</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts (order matters) -->
+    <script src="js/config.js"></script>
+    <script src="js/characters.js"></script>
+    <script src="sprites_output.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/world1.js"></script>
+    <script src="js/world2.js"></script>
+    <script src="js/world3.js"></script>
+    <script src="js/maze.js"></script>
+    <script src="js/celebration.js"></script>
+    <script src="js/music.js"></script>
+
+    <!-- Generate stars for start screen -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.getElementById('start-stars');
+            if (starsContainer) {
+                for (let i = 0; i < 30; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    star.style.animationDuration = (1 + Math.random() * 2) + 's';
+                    starsContainer.appendChild(star);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

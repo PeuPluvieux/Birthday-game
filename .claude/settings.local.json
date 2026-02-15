@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(node:*)",
+      "Bash(1 <<'EOF'\nimport { readFileSync } from 'fs';\nconst src = readFileSync\\('C:/Users/patrick.parco/Desktop/Birthday app/js/characters.js', 'utf8'\\);\n// Try to detect syntax errors by parsing chunks\ntry {\n    new Function\\(src.substring\\(0, 5000\\)\\);\n    console.log\\('First 5000 chars OK'\\);\n} catch\\(e\\) { console.log\\('Error in 0-5000:', e.message\\); }\ntry {\n    new Function\\(src.substring\\(5000, 10000\\)\\);\n    console.log\\('5000-10000 OK'\\);\n} catch\\(e\\) { console.log\\('Error in 5000-10000:', e.message\\); }\ntry {\n    new Function\\(src.substring\\(10000, 15000\\)\\);\n    console.log\\('10000-15000 OK'\\);\n} catch\\(e\\) { console.log\\('Error in 10000-15000:', e.message\\); }\ntry {\n    new Function\\(src.substring\\(15000, 20000\\)\\);\n    console.log\\('15000-20000 OK'\\);\n} catch\\(e\\) { console.log\\('Error in 15000-20000:', e.message\\); }\ntry {\n    new Function\\(src\\);\n    console.log\\('Full file: OK'\\);\n} catch\\(e\\) { console.log\\('Full file error:', e.message\\); }\nEOF)",
+      "Bash(del \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\validate_sprites.js\")",
+      "Bash(start \"\" \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\index.html\")",
+      "Bash(del \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\sprites_temp.js\")",
+      "Bash(del \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\check_sprites.js\")",
+      "Bash(del \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\pixel_extractor.html\")",
+      "Bash(powershell -Command \"\n$content = Get-Content -Path ''js/characters.js'' -Raw\n# Get the SPRITES section \\(lines 137-650\\)\n$lines = $content.Split\\([Environment]::NewLine\\)\n$spritesStart = 136  # 0-indexed\n$spritesEnd = 649\n\n$spritesText = $lines[$spritesStart..$spritesEnd] -join '' ''\n\n# Extract all uppercase identifiers \\(2+ chars\\)\n$matches = [regex]::Matches\\($spritesText, ''\\\\b\\([A-Z][A-Z0-9]{0,9}\\)\\\\b''\\)\n$allVars = @\\(\\)\nforeach\\($match in $matches\\) {\n    $allVars += $match.Groups[1].Value\n}\n\n# Get unique variables\n$unique = $allVars | Select-Object -Unique | Sort-Object\n\n# Known defined aliases\n$defined = @\\(''BT1'',''BT2'',''BT3'',''BT4'',''BOL'',''BLB'',''BL2'',''BL3'',''BEY'',''BEW'',''BMT'',\n             ''SK1'',''SK2'',''SK3'',''SKO'',''SKM'',''SKL'',''SKW'',''SKR'',''SKT'',''SKG'',\n             ''PY1'',''PY2'',''PY3'',''PYO'',''PYB'',''PYC'',''PYW'',''PYK'',''PYH'',\n             ''PP1'',''PP2'',''PP3'',''PBR'',''PB3'',''PB4'',''PPO'',''PCL'',''PPK'',''PPW'',\n             ''PK1'',''PK2'',''PK3'',''PK4'',''PK5'',''PK6'',''PK7'',''PK8'',\n             ''NH1'',''NH2'',''NH3'',''NH4'',''NH5'',''NH6'',''NHW'',''NHG'',''NHF'',''NHD'',''NHK'',''NHS'',''NHB'',\n             ''BR1'',''BR2'',''BR3'',''BB1'',''BB2'',''BP1'',''BP2'',''BRL'',''BRD'',\n             ''CW1'',''CW2'',''CY1'',''CY2'',''CF1'',''CF2'',''CP1'',''CP2'',''CP3'',''CR1'',''_''\\)\n\n# Find undefined\n$undefined = @\\(\\)\nforeach\\($var in $unique\\) {\n    if \\($defined -notcontains $var\\) {\n        $undefined += $var\n    }\n}\n\n$undefined | Sort-Object\n\")",
+      "Bash(start \"\" \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\pixel_extractor.html\")",
+      "Bash(start \"\" \"C:\\\\Users\\\\patrick.parco\\\\Desktop\\\\Birthday app\\\\auto_extract.html\")",
+      "Bash(start \"\" \"http://localhost:8080/auto_extract.html\")",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

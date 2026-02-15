@@ -1,0 +1,521 @@
+/* ============================================================
+   NHƯ'S BIRTHDAY ADVENTURE - GLOBAL STYLES
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+    -webkit-font-smoothing: auto;
+    image-rendering: pixelated;
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    max-width: 420px;
+    max-height: 760px;
+    position: relative;
+    overflow: hidden;
+    background: #111;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Music toggle */
+#music-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#music-toggle:hover {
+    opacity: 0.8;
+}
+
+@media (min-width: 500px) {
+    #game-container {
+        border: 4px solid #444;
+        border-radius: 12px;
+        box-shadow: 0 0 60px rgba(100, 100, 255, 0.2);
+    }
+}
+
+/* ============================================================
+   SCREEN SYSTEM
+   ============================================================ */
+
+.game-screen {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+}
+
+.game-screen.screen-active {
+    opacity: 1;
+    z-index: 10;
+}
+
+.game-screen.screen-exit {
+    opacity: 0;
+    z-index: 5;
+}
+
+/* ============================================================
+   START SCREEN
+   ============================================================ */
+
+#screen-start {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    text-align: center;
+    padding: 20px;
+}
+
+.start-title {
+    color: #ffd700;
+    font-size: clamp(14px, 4vw, 20px);
+    text-shadow: 2px 2px 0 #b8860b, 4px 4px 0 #333;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+.start-subtitle {
+    color: #87ceeb;
+    font-size: clamp(8px, 2.5vw, 12px);
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+.start-pokeball {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+    position: relative;
+    animation: pokeballBounce 1s ease-in-out infinite;
+}
+
+.pokeball-top {
+    width: 80px;
+    height: 40px;
+    background: #e74c3c;
+    border-radius: 80px 80px 0 0;
+    border: 4px solid #333;
+    border-bottom: none;
+}
+
+.pokeball-bottom {
+    width: 80px;
+    height: 40px;
+    background: #ecf0f1;
+    border-radius: 0 0 80px 80px;
+    border: 4px solid #333;
+    border-top: none;
+}
+
+.pokeball-center {
+    width: 80px;
+    height: 4px;
+    background: #333;
+    position: relative;
+}
+
+.pokeball-button {
+    width: 20px;
+    height: 20px;
+    background: #ecf0f1;
+    border: 4px solid #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#start-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+    font-size: clamp(12px, 3vw, 16px);
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 40px;
+    box-shadow: 0 4px 0 #c0392b;
+    transition: all 0.1s;
+    animation: btnPulse 1.5s ease-in-out infinite;
+}
+
+#start-btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c0392b;
+}
+
+#start-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.start-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes pokeballBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes btnPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* ============================================================
+   OPENING SEQUENCE
+   ============================================================ */
+
+#screen-opening {
+    cursor: pointer;
+    padding: 0;
+}
+
+.opening-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: background 1s ease;
+}
+
+.bg-black {
+    background: #000;
+}
+
+.bg-meadow {
+    background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 40%, #4a8b3f 40%, #3d7a35 60%, #2d6b25 100%);
+}
+
+.opening-characters {
+    position: absolute;
+    bottom: 45%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 5;
+}
+
+.opening-char {
+    width: 64px;
+    height: 64px;
+    animation: charBounceIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes charBounceIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.5); }
+    60% { opacity: 1; transform: translateY(-10px) scale(1.1); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.opening-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 35%;
+    background: rgba(0, 0, 0, 0.85);
+    border-top: 4px solid #555;
+    padding: 20px 24px;
+    z-index: 10;
+}
+
+.dialog-line {
+    color: white;
+    font-size: clamp(10px, 2.8vw, 13px);
+    line-height: 2;
+    margin-bottom: 6px;
+}
+
+.opening-indicator {
+    position: absolute;
+    bottom: 12px;
+    right: 20px;
+    z-index: 11;
+    animation: indicatorBlink 0.8s step-end infinite;
+}
+
+.opening-indicator::after {
+    content: '▼';
+    color: white;
+    font-size: 12px;
+}
+
+@keyframes indicatorBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.opening-start-btn {
+    display: none;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+    font-size: clamp(10px, 2.5vw, 14px);
+    cursor: pointer;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    box-shadow: 0 4px 0 #c0392b;
+    animation: btnPulse 1.5s ease-in-out infinite;
+}
+
+.opening-name-reveal {
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    text-align: center;
+}
+
+.name-text {
+    color: #ffd700;
+    font-size: clamp(20px, 6vw, 28px);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 2px 2px 0 #b8860b;
+    animation: nameSparkle 1s ease-out;
+}
+
+.opening-name-reveal.sparkle .name-text {
+    animation: nameSparkle 1s ease-out;
+}
+
+@keyframes nameSparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.opening-world-map {
+    display: none;
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 8;
+    width: 80%;
+    max-width: 300px;
+}
+
+.map-path {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.map-node {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 3px solid #333;
+    animation: mapNodePop 0.5s ease-out backwards;
+}
+
+.map-node:nth-child(1) { background: #4a8b3f; animation-delay: 0s; }
+.map-node:nth-child(3) { background: #2d5016; animation-delay: 0.3s; }
+.map-node:nth-child(5) { background: #ffeaa7; animation-delay: 0.6s; }
+
+.map-dots {
+    flex: 1;
+    height: 4px;
+    margin: 0 8px;
+    background: repeating-linear-gradient(90deg, #fff 0px, #fff 4px, transparent 4px, transparent 10px);
+    animation: dotsAppear 0.5s ease-out backwards;
+}
+
+.map-dots:nth-child(2) { animation-delay: 0.15s; }
+.map-dots:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes mapNodePop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes dotsAppear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Character idle animations for opening */
+.opening-char.char-bulbasaur {
+    animation: charBounceIn 0.5s ease-out forwards, idleBob 1.5s ease-in-out 0.5s infinite;
+}
+
+.opening-char.char-slowpoke {
+    animation: charBounceIn 0.5s ease-out forwards, idleBob 2s ease-in-out 0.8s infinite;
+}
+
+.opening-char.char-psyduck {
+    animation: charBounceIn 0.5s ease-out forwards, idleBob 1.8s ease-in-out 1s infinite;
+}
+
+.opening-char.yawn {
+    animation: charBounceIn 0.5s ease-out forwards, yawnAnim 2s ease-in-out infinite !important;
+}
+
+.opening-char.confused {
+    animation: charBounceIn 0.5s ease-out forwards, confusedAnim 1.5s ease-in-out infinite !important;
+}
+
+@keyframes idleBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes yawnAnim {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(2px) rotate(-5deg); }
+}
+
+@keyframes confusedAnim {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+/* ============================================================
+   INTRO / COMPLETE SCREENS (shared between worlds)
+   ============================================================ */
+
+.intro-screen, .complete-screen {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.intro-character, .complete-character {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 30px;
+    animation: idleBob 1.5s ease-in-out infinite;
+}
+
+.intro-text, .complete-text {
+    color: white;
+    font-size: clamp(9px, 2.5vw, 12px);
+    line-height: 2.2;
+    margin-bottom: 30px;
+    min-height: 100px;
+    padding: 0 10px;
+}
+
+.intro-btn, .complete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+    font-size: clamp(10px, 2.5vw, 13px);
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #c0392b;
+    transition: all 0.1s;
+}
+
+.intro-btn:hover, .complete-btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c0392b;
+}
+
+.intro-btn:active, .complete-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* ============================================================
+   FADE UTILITY
+   ============================================================ */
+
+.fade-in {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

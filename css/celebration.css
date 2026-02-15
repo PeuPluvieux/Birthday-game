@@ -1,0 +1,287 @@
+/* ============================================================
+   CELEBRATION / FINALE
+   ============================================================ */
+
+#screen-celebration {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Stars background */
+.celebration-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.celebration-star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: celebTwinkle 1.5s ease-in-out infinite;
+}
+
+@keyframes celebTwinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Characters area */
+.celebration-characters {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    z-index: 10;
+    position: relative;
+    min-height: 80px;
+}
+
+.celeb-char {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+.celeb-char.entered {
+    opacity: 1;
+    transform: translateY(0);
+    animation: celebBob 2s ease-in-out infinite;
+}
+
+@keyframes celebBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Cake */
+.celebration-cake {
+    position: relative;
+    z-index: 10;
+    margin: 20px auto;
+    opacity: 0;
+    transform: translateY(80px);
+    transition: all 1s ease-out;
+}
+
+.celebration-cake.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Candles */
+.candles-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 15;
+}
+
+.candle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.candle-stick {
+    width: 8px;
+    height: 24px;
+    background: linear-gradient(90deg, #ff69b4, #ff1493);
+    border-radius: 2px;
+}
+
+.candle-flame {
+    width: 10px;
+    height: 16px;
+    background: radial-gradient(ellipse at bottom, #ffd700, #ff6600, transparent);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 0.3s ease-in-out infinite alternate;
+    margin-bottom: 2px;
+    transition: all 0.3s;
+}
+
+.candle-flame.blown {
+    animation: blowOut 0.5s ease-out forwards;
+}
+
+.candle-smoke {
+    width: 6px;
+    height: 6px;
+    background: rgba(200, 200, 200, 0.6);
+    border-radius: 50%;
+    opacity: 0;
+    position: absolute;
+    top: -10px;
+}
+
+.candle-smoke.active {
+    animation: smokeRise 1s ease-out forwards;
+}
+
+@keyframes flicker {
+    0% { transform: scale(1) translateX(0); opacity: 0.9; }
+    25% { transform: scale(1.05, 0.95) translateX(-1px); opacity: 1; }
+    50% { transform: scale(0.95, 1.05) translateX(1px); opacity: 0.85; }
+    100% { transform: scale(1.02) translateX(0); opacity: 1; }
+}
+
+@keyframes blowOut {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5, 0.5); opacity: 0.5; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes smokeRise {
+    0% { opacity: 0.8; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-30px) scale(2); }
+}
+
+/* Blow prompt */
+.blow-prompt {
+    color: #ffd700;
+    font-size: clamp(8px, 2.2vw, 11px);
+    text-align: center;
+    margin: 15px 0;
+    z-index: 10;
+    position: relative;
+    animation: promptPulse 1.5s ease-in-out infinite;
+    line-height: 2;
+}
+
+@keyframes promptPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Happy Birthday text */
+.happy-birthday-text {
+    display: none;
+    color: #ffd700;
+    font-size: clamp(14px, 4vw, 22px);
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    z-index: 10;
+    position: relative;
+    margin: 15px 0;
+    animation: hbdPop 0.8s ease-out;
+}
+
+.happy-birthday-text.visible {
+    display: block;
+}
+
+@keyframes hbdPop {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Birthday message */
+.birthday-message {
+    z-index: 10;
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    min-height: 120px;
+}
+
+.birthday-message .msg-line {
+    color: white;
+    font-size: clamp(8px, 2.2vw, 11px);
+    line-height: 2.2;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s ease-out;
+}
+
+.birthday-message .msg-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Confetti */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -20px;
+    animation: confettiFall var(--duration) ease-in var(--delay) forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) translateX(var(--drift)) rotate(var(--rotation));
+        opacity: 0;
+    }
+}
+
+/* Credits */
+.celebration-credits {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.credits-text {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 7px;
+    line-height: 2;
+}
+
+/* Heart animation */
+.floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 16px;
+    animation: heartFloat 4s ease-in-out infinite;
+    opacity: 0.4;
+}
+
+@keyframes heartFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+        opacity: 0.7;
+    }
+}
